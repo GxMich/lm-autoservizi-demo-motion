@@ -66,20 +66,30 @@
   /* ---------- Menu ---------- */
   var testata = $(".testata"), bottone = $(".menu-bottone"), menu = $("#menu");
   if (bottone && menu) {
-    var chiudiMenu = function () { menu.classList.remove("is-open"); bottone.setAttribute("aria-expanded", "false"); bottone.setAttribute("aria-label", "Apri il menu"); document.body.style.overflow = ""; if (lenis) lenis.start(); };
+    var scrollMenu = 0;
+    var chiudiMenu = function () {
+      if (!menu.classList.contains("is-open")) return;
+      menu.classList.remove("is-open"); testata.classList.remove("menu-aperto");
+      bottone.setAttribute("aria-expanded", "false"); bottone.setAttribute("aria-label", "Apri il menu");
+      document.body.classList.remove("menu-aperto"); document.body.style.removeProperty("--menu-scroll");
+      window.scrollTo(0, scrollMenu); if (lenis) lenis.start();
+    };
     bottone.addEventListener("click", function () {
       if (menu.classList.contains("is-open")) { chiudiMenu(); return; }
-      menu.classList.add("is-open"); bottone.setAttribute("aria-expanded", "true"); bottone.setAttribute("aria-label", "Chiudi il menu"); document.body.style.overflow = "hidden";
-      testata.classList.remove("nascosto"); if (lenis) lenis.stop();
+      scrollMenu = window.scrollY; if (lenis) lenis.stop();
+      testata.classList.remove("nascosto"); testata.classList.add("menu-aperto");
+      document.body.style.setProperty("--menu-scroll", -scrollMenu + "px"); document.body.classList.add("menu-aperto");
+      menu.classList.add("is-open"); bottone.setAttribute("aria-expanded", "true"); bottone.setAttribute("aria-label", "Chiudi il menu");
     });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && menu.classList.contains("is-open")) { chiudiMenu(); bottone.focus(); } });
     $$("a", menu).forEach(function (a) { a.addEventListener("click", chiudiMenu); });
+    window.matchMedia("(min-width: 1100px)").addEventListener("change", function (e) { if (e.matches) chiudiMenu(); });
   }
 
   /* ---------- Testata: trasparente in cima, si nasconde scorrendo verso il basso ---------- */
   var ultimoY = 0;
   function suScroll(y) {
-    if (!testata) return;
+    if (!testata || (menu && menu.classList.contains("is-open"))) return;
     testata.classList.toggle("solido", y > 24);
     var giu = y > ultimoY && y > 220;
     if (!(menu && menu.classList.contains("is-open"))) testata.classList.toggle("nascosto", giu);
@@ -255,7 +265,8 @@
     function leggi() {
       corrente = Math.max(0, Math.min(pannelli.length - 1, Math.round(traccia.scrollLeft / traccia.clientWidth)));
       if (corrente !== ultimoAnimato) {
-        if (MOTO && animaPannello) animaPannello(pannelli[corrente], corrente > ultimoAnimato ? 1 : -1);
+        // Nei servizi lo swipe e lo snap sono già la transizione: niente secondo ritaglio durante il gesto.
+        if (MOTO && animaPannello && !pannelli[corrente].classList.contains("servizio-editoriale")) animaPannello(pannelli[corrente], corrente > ultimoAnimato ? 1 : -1);
         ultimoAnimato = corrente;
       }
       aggiorna(corrente);
@@ -406,7 +417,12 @@
     reportage.fromTo(".reportage-finestra", { clipPath: "inset(12% 42% 12% 42%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.25, ease: "expo.out", clearProps: "clipPath" }, 0)
       .fromTo(".reportage-finestra img", { scale: 1.18 }, { scale: 1, duration: 1.4, ease: "power3.out", clearProps: "transform" }, 0);
     var fotoServizi = $$(".servizio-editoriale-foto .foto-editoriale");
-    gsap.fromTo(fotoServizi, { clipPath: "inset(0% 0% 94% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1, stagger: .14, ease: "expo.out", clearProps: "clipPath", scrollTrigger: { id: "servizi-apertura", trigger: ".servizi-editoriali-griglia", start: "top 84%", once: true } });
+    mm.add("(min-width: 1100px)", function () {
+      gsap.fromTo(fotoServizi, { clipPath: "inset(0% 0% 94% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1, stagger: .14, ease: "expo.out", clearProps: "clipPath", scrollTrigger: { id: "servizi-apertura", trigger: ".servizi-editoriali-griglia", start: "top 84%", once: true } });
+    });
+    mm.add("(max-width: 1099px)", function () {
+      gsap.fromTo(fotoServizi, { y: 18, opacity: .65 }, { y: 0, opacity: 1, duration: 1.25, ease: "power2.inOut", clearProps: "transform,opacity", scrollTrigger: { id: "servizi-apertura", trigger: ".servizi-editoriali-griglia", start: "top 84%", once: true } });
+    });
   }
 
   /* ---------- Comparse morbide (poche, solo dove aiutano) ---------- */

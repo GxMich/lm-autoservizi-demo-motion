@@ -43,6 +43,7 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 body { margin: 0; font-family: var(--font); font-size: 1.0625rem; line-height: 1.6; color: var(--testo); background: var(--notte); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+body.menu-aperto { position: fixed; top: var(--menu-scroll); left: 0; right: 0; overflow: hidden; }
 img, svg { max-width: 100%; display: block; }
 img { height: auto; }
 a { color: var(--arancio-vivo); text-underline-offset: .2em; }
@@ -110,10 +111,12 @@ h3 { font-size: 1.25rem; letter-spacing: -.02em; line-height: 1.12; }
 .menu-bottone[aria-expanded="true"] span:first-child { transform: translateY(4.5px) rotate(45deg); }
 .menu-bottone[aria-expanded="true"] span:last-child { transform: translateY(-4.5px) rotate(-45deg); }
 @media (max-width: 1099px) {
+  /* Il blur e il transform della testata non devono contenere il menu fixed. */
+  .testata.menu-aperto { z-index: 100; transform: none; transition: none; background: var(--notte); backdrop-filter: none; -webkit-backdrop-filter: none; }
   .menu-bottone { display: block; }
   .testata-chiama { display: none; }
   .menu { display: none; margin: 0; }
-  .menu.is-open { display: block; position: fixed; inset: var(--testata) 0 0 0; background: var(--notte); padding: 20px var(--gutter) 90px; overflow: auto; }
+  .menu.is-open { display: block; position: fixed; inset: var(--testata) 0 0 0; background: var(--notte); padding: 20px var(--gutter) calc(32px + env(safe-area-inset-bottom, 0px)); overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .menu.is-open ul { flex-direction: column; gap: 0; }
   .menu.is-open li { border-bottom: 1px solid var(--linea); }
   .menu.is-open a { display: block; padding: 16px 0; font-size: 1.3rem; font-weight: 700; background: none; }
