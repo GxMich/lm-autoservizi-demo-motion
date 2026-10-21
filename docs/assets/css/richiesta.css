@@ -1,0 +1,118 @@
+/* Stessa identità delle due demo; il modulo funziona senza librerie di animazione. */
+.richiesta { padding-block: clamp(72px, 10vw, 136px); background: var(--asfalto); scroll-margin-top: 96px; }
+.rqs-griglia { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.rqs-intro { position: sticky; top: 110px; }
+.rqs-intro h2 { font-size: clamp(2.4rem, 4.6vw, 4.2rem); margin-bottom: 28px; }
+.rqs-intro > p { max-width: 38ch; color: var(--testo); font-size: 1.08rem; }
+.rqs-intro .rqs-rassicurazione { color: var(--grigio); font-size: .98rem; }
+.rqs-telefono { margin-top: 34px; padding-top: 24px; border-top: 1px solid var(--linea); }
+.rqs-telefono > span { display: block; color: var(--grigio); font-size: .9rem; margin-bottom: 10px; }
+.rqs-telefono > a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-weight: 700; text-decoration: none; color: var(--testo); }
+.rqs-telefono > a:hover { color: var(--fanale); }
+.rqs-telefono svg { width: 22px; height: 22px; color: var(--arancio-vivo); flex: none; }
+.rqs-form { padding: clamp(22px, 3vw, 38px); background: var(--asfalto-2); border: 1px solid var(--linea); border-radius: 16px; min-width: 0; }
+.rqs-campo { margin-bottom: 22px; min-width: 0; }
+.rqs-campo > label, .rqs-modalita legend { display: block; font-weight: 600; font-size: .92rem; padding: 0; margin-bottom: 9px; }
+.rqs-campo label span { color: var(--grigio); font-weight: 400; font-size: .8rem; }
+.rqs-campo input, .rqs-campo textarea, .rqs-campo select { display: block; width: 100%; min-height: 50px; padding: 12px 14px; border: 1px solid #56606a; border-radius: 10px; background: var(--notte); color: var(--testo); font: 400 1rem/1.5 var(--font); }
+.rqs-campo input::placeholder, .rqs-campo textarea::placeholder { color: #9aa2aa; opacity: 1; }
+.rqs-campo select { padding-right: 28px; }
+.rqs-campo textarea { resize: vertical; min-height: 104px; }
+.rqs-campo :is(input, textarea, select):focus-visible { outline: 2px solid var(--fanale); outline-offset: 3px; }
+.rqs-campo [aria-invalid="true"] { border-color: #ffac9c; }
+.rqs-campi { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.rqs-modalita { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+.rqs-modalita > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.rqs-modalita label { position: relative; cursor: pointer; }
+.rqs-modalita input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.rqs-modalita span { display: flex; align-items: center; min-height: 44px; padding: 9px 13px; border: 1px solid #56606a; border-radius: 8px; color: var(--testo); background: var(--notte); font-size: .84rem; }
+.rqs-modalita input:checked + span { background: #402117; border-color: var(--arancio-vivo); color: var(--fanale); }
+.rqs-modalita input:focus-visible + span { outline: 2px solid var(--fanale); outline-offset: 3px; }
+.rqs-anteprima { margin-bottom: 22px; border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+.rqs-anteprima summary { min-height: 54px; padding-block: 15px; display: flex; align-items: center; justify-content: space-between; gap: 16px; list-style: none; cursor: pointer; font-size: .9rem; font-weight: 600; }
+.rqs-anteprima summary::-webkit-details-marker { display: none; }
+.rqs-anteprima summary svg { width: 19px; height: 19px; flex: none; }
+.rqs-anteprima[open] summary svg { transform: rotate(180deg); }
+.rqs-anteprima summary:hover { color: var(--fanale); }
+.rqs-anteprima[open] pre { padding: 4px 0 20px; }
+.rqs-anteprima pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; color: #c6ccd2; font: 400 .92rem/1.65 var(--font); }
+.rqs-invia { width: 100%; min-height: 54px; }
+.rqs-nota { color: var(--grigio); font-size: .78rem; line-height: 1.6; margin: 14px 0 0; }
+.rqs-nota a { color: var(--testo); }
+.rqs-errore { color: #ffb9aa; font-size: .85rem; margin: 9px 0 0; }
+.rqs-esito { color: var(--fanale); font-size: .9rem; margin: 16px 0 0; }
+.rqs-esito a { color: var(--fanale); }
+@media (max-width: 899px) {
+  .rqs-griglia { grid-template-columns: 1fr; gap: 30px; }
+  .rqs-intro { position: static; }
+  .rqs-intro h2 { margin-bottom: 20px; }
+  .rqs-intro > p { max-width: none; }
+  .rqs-telefono { margin-top: 24px; padding-top: 18px; }
+  .rqs-invia { font-size: .9rem; padding-inline: 12px; }
+}
+@media (max-width: 480px) { .rqs-campi { grid-template-columns: 1fr; gap: 0; } }
+
+/* Un passaggio alla volta: i campi restano nello stesso modulo. */
+.rqs-form [hidden] { display: none !important; }
+.rqs-posizione { font-size: .82rem; color: var(--fanale); margin-bottom: 22px; }
+.rqs-navigazione { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.rqs-navigazione .btn { margin-left: auto; min-width: 130px; }
+.rqs-navigazione .link-btn { min-height: 44px; }
+.rqs-passo { min-height: 240px; }
+.rqs-passo:last-of-type { min-height: 0; }
+.rqs-passo[data-rqs-passo="2"] { min-height: 0; }
+.rqs-passo:has(.rqs-esito:not([hidden])) .rqs-nota { display: none; }
+.home .richiesta { padding-block: clamp(24px, 4svh, 48px); }
+.home .rqs-intro { position: static; align-self: center; }
+.home .rqs-intro h2 { margin-bottom: 20px; }
+.home .rqs-form { padding: 24px; }
+.home .rqs-anteprima[open] pre { max-height: 16svh; overflow: auto; }
+.home .rqs-campo textarea { resize: none; min-height: 72px; height: 72px; }
+.home .rqs-modalita > div { display: grid; grid-template-columns: 1fr 1fr; }
+.home .rqs-modalita span { height: 100%; }
+@media (max-width: 899px) {
+  .home .rqs-griglia { gap: 18px; }
+  .home .rqs-intro h2 { font-size: 1.8rem; margin-bottom: 12px; }
+  .home .rqs-intro > p { font-size: .94rem; margin-bottom: 8px; }
+  .home .rqs-telefono { margin: 0; padding: 0; border: 0; }
+  .home .rqs-telefono > span { display: none; }
+  .home .rqs-telefono a { font-size: .85rem; min-height: 35px; }
+  .home .rqs-form { padding: 18px; }
+  .home .rqs-passo { min-height: 205px; }
+  .home .rqs-posizione { margin-bottom: 16px; }
+  .home .rqs-campo { margin-bottom: 16px; }
+  .home .rqs-modalita { margin-bottom: 16px; }
+  .home .rqs-modalita span { padding: 8px 10px; font-size: .78rem; }
+  .home .rqs-anteprima { margin-bottom: 14px; }
+  .home .rqs-anteprima summary { min-height: 44px; padding-block: 10px; font-size: .8rem; }
+  .home .rqs-invia { min-height: 48px; font-size: .8rem; }
+  .home .rqs-nota { font-size: .72rem; margin-top: 10px; }
+  .home .rqs-griglia:has([data-rqs-passo="0"][hidden]) .rqs-intro > p,
+  .home .rqs-griglia:has([data-rqs-passo="0"][hidden]) .rqs-telefono { display: none; }
+  .home .rqs-griglia:has([data-rqs-passo="0"][hidden]) .rqs-intro h2 { font-size: 1.5rem; margin: 0; }
+}
+@media (max-height: 650px) and (min-width: 700px) {
+  .home .rqs-form { padding: 16px; }
+  .home .rqs-passo { min-height: 190px; }
+  .home .rqs-posizione { margin-bottom: 12px; }
+  .home .rqs-campo { margin-bottom: 12px; }
+  .home .rqs-campo > label, .home .rqs-modalita legend { margin-bottom: 6px; font-size: .85rem; }
+  .home .rqs-modalita span { font-size: .75rem; padding: 7px 9px; }
+  .home .rqs-modalita { margin-bottom: 12px; }
+  .home .rqs-passo[data-rqs-passo="2"] { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-height: 0; }
+  .home .rqs-passo[data-rqs-passo="2"] > .rqs-campo { grid-column: 1; grid-row: 1 / 5; }
+  .home .rqs-passo[data-rqs-passo="2"] > :not(.rqs-campo) { grid-column: 2; }
+  .home .rqs-passo[data-rqs-passo="2"] textarea { height: 120px; }
+  .home .rqs-passo[data-rqs-passo="2"] .rqs-nota { margin: 0; font-size: .67rem; }
+  .home .rqs-passo[data-rqs-passo="2"] .rqs-invia { min-height: 44px; font-size: .75rem; }
+  .home .rqs-anteprima { margin: 0; }
+  .home .rqs-navigazione .btn { min-height: 44px; }
+}
+@media (max-height: 650px) and (max-width: 699px) {
+  .home .richiesta { padding-block: 16px; }
+  .home .rqs-griglia { gap: 12px; }
+  .home .rqs-form { padding: 14px; }
+  .home .rqs-griglia:has([data-rqs-passo="0"][hidden]) .rqs-intro h2 { font-size: 1.3rem; }
+  .home .rqs-anteprima[open] pre { max-height: 12svh; }
+  .home .rqs-esito { font-size: .78rem; line-height: 1.5; margin-top: 10px; }
+}

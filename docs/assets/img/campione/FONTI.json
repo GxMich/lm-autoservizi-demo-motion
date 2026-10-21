@@ -1,0 +1,134 @@
+{
+  "data_verifica": "2026-10-21",
+  "licenza": "Pexels License",
+  "fonte_licenza": "https://www.pexels.com/license/",
+  "trattamento": "Solo ridimensionamento e conversione WebP; ritaglio tramite CSS. Nessuna modifica generativa.",
+  "foto": [
+    {
+      "nome": "eroe",
+      "file": "eroe.webp",
+      "dimensioni": [
+        1600,
+        2400
+      ],
+      "id_pexels": 4489714,
+      "autore": "cottonbro studio",
+      "pagina": "https://www.pexels.com/photo/4489714/",
+      "url_scaricato": "https://images.pexels.com/photos/4489714/pexels-photo-4489714.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "officina",
+      "file": "officina.webp",
+      "dimensioni": [
+        1600,
+        1067
+      ],
+      "id_pexels": 4489702,
+      "autore": "cottonbro studio",
+      "pagina": "https://www.pexels.com/photo/man-in-black-long-sleeve-shirt-standing-beside-red-car-4489702/",
+      "url_scaricato": "https://images.pexels.com/photos/4489702/pexels-photo-4489702.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "mani",
+      "file": "mani.webp",
+      "dimensioni": [
+        1600,
+        2400
+      ],
+      "id_pexels": 4315574,
+      "autore": "Anna Shvets",
+      "pagina": "https://www.pexels.com/photo/person-in-black-long-sleeves-repairing-the-car-engine-4315574/",
+      "url_scaricato": "https://images.pexels.com/photos/4315574/pexels-photo-4315574.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "meccanica",
+      "file": "meccanica.webp",
+      "dimensioni": [
+        1600,
+        1067
+      ],
+      "id_pexels": 4315570,
+      "autore": "Anna Shvets",
+      "pagina": "https://www.pexels.com/photo/an-auto-mechanic-checking-the-engine-of-a-car-4315570/",
+      "url_scaricato": "https://images.pexels.com/photos/4315570/pexels-photo-4315570.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "diagnosi",
+      "file": "diagnosi.webp",
+      "dimensioni": [
+        1600,
+        1067
+      ],
+      "id_pexels": 6870313,
+      "autore": "Gustavo Fring",
+      "pagina": "https://www.pexels.com/photo/mechanic-checking-the-engine-of-a-car-6870313/",
+      "url_scaricato": "https://images.pexels.com/photos/6870313/pexels-photo-6870313.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "gomme",
+      "file": "gomme.webp",
+      "dimensioni": [
+        1600,
+        1067
+      ],
+      "id_pexels": 6870311,
+      "autore": "Gustavo Fring",
+      "pagina": "https://www.pexels.com/photo/mechanic-holding-a-car-tire-6870311/",
+      "url_scaricato": "https://images.pexels.com/photos/6870311/pexels-photo-6870311.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "ritiro",
+      "file": "ritiro.webp",
+      "dimensioni": [
+        1600,
+        1067
+      ],
+      "id_pexels": 97075,
+      "autore": "Negative Space",
+      "pagina": "https://www.pexels.com/photo/shallow-focus-car-key-held-by-a-man-97075/",
+      "url_scaricato": "https://images.pexels.com/photos/97075/pexels-photo-97075.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "riconsegna",
+      "file": "riconsegna.webp",
+      "dimensioni": [
+        1600,
+        2001
+      ],
+      "id_pexels": 37276595,
+      "autore": "egeardaphotos",
+      "pagina": "https://www.pexels.com/photo/close-up-of-a-silver-car-s-front-in-ankara-turkiye-37276595/",
+      "url_scaricato": "https://images.pexels.com/photos/37276595/pexels-photo-37276595.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    },
+    {
+      "nome": "mobile",
+      "file": "mobile.webp",
+      "dimensioni": [
+        1600,
+        1067
+      ],
+      "id_pexels": 8478265,
+      "autore": "Sergey Meshkov",
+      "pagina": "https://www.pexels.com/photo/a-mechanic-repairing-a-car-8478265/",
+      "url_scaricato": "https://images.pexels.com/photos/8478265/pexels-photo-8478265.jpeg?auto=compress&cs=tinysrgb&w=1600",
+      "uso": "Fotografia stock di esempio, non documenta L.M. Autoservizi",
+      "licenza": "https://www.pexels.com/license/"
+    }
+  ]
+}
