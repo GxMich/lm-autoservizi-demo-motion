@@ -89,9 +89,7 @@ ICONE = {
                        '<path class="pieno scintilla" d="M19.5 1.6l.75 1.85 1.85.75-1.85.75-.75 1.85-.75-1.85-1.85-.75 1.85-.75z"/>', "ico-carrozzeria"),
     "diagnosi": svg('<path class="spia" d="M6.5 9.5h3L11 8h3.5l1 1.5H18v2h1.5v-2H21V18h-1.5v-2.5H18V18h-3.5L13 19.5H8.5l-2-2z"/>'
                     '<path d="M10.5 5h4M12.5 5v3M3 10.5v6M3 13.5h3.5"/>', "ico-diagnosi"),
-    "soccorso": svg('<path d="M6 18v-4h8.5"/><path d="M14.5 18V9.8h3.4c.5 0 .9.2 1.2.6l2.6 3.4c.2.3.3.6.3 1V18"/><path class="pieno" d="M16.3 11.3h1.8l1.6 2.2h-3.4z"/>'
-                    '<path d="M5.8 18h1.4M11.2 18h4.8M20 18h2M10 14 6.5 7.2H3.5"/><circle cx="9.2" cy="18.2" r="2"/><circle cx="18" cy="18.2" r="2"/>'
-                    '<g class="gancio"><path d="M3.5 7.2v3.3"/><path d="M3.5 10.5a1.5 1.5 0 1 0 1.5 1.5"/></g>', "ico-soccorso"),
+    "soccorso": svg('<path d="m2.5 10 9.5-7.5 9.5 7.5M5.5 8v12h13V8M9 20v-6h6v6"/>', "ico-domicilio"),
     "aziende": svg('<rect x="3" y="7.5" width="18" height="12.5" rx="2"/><path d="M8.5 7.5V5.8c0-1 .8-1.8 1.8-1.8h3.4c1 0 1.8.8 1.8 1.8v1.7M3 12.5h18"/>'
                    '<path class="pieno" d="M10.8 11.3h2.4v2.4h-2.4z"/>', "ico-aziende"),
     "altro": svg('<circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.3a2.8 2.8 0 1 1 3.9 2.6c-.7.3-1.2 1-1.2 1.8v.6"/><circle class="pieno" cx="12" cy="17.2" r="1"/>', "ico-altro"),

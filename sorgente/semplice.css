@@ -57,26 +57,22 @@ main { display: block; }
 .ico-diagnosi .spia { fill: currentColor; fill-opacity: 0; }
 .ico .gira, .ico .scintilla, .ico .fulmine, .veicolo .ruota { transform-box: fill-box; transform-origin: center; }
 .ico .chiave { transform-box: view-box; transform-origin: 12px 12px; }
-.ico .gancio { transform-box: view-box; transform-origin: 3.5px 7.2px; }
 @keyframes gira { to { transform: rotate(360deg); } }
 @keyframes chiave { 0% { transform: rotate(0); } 35% { transform: rotate(-26deg); } 65% { transform: rotate(8deg); } 100% { transform: rotate(0); } }
 @keyframes fulmine { 0%, 100% { opacity: 1; } 18% { opacity: .15; } 30% { opacity: 1; } 44% { opacity: .3; } 56% { opacity: 1; } }
 @keyframes scintilla { 0% { transform: scale(1) rotate(0); } 45% { transform: scale(1.55) rotate(90deg); } 100% { transform: scale(1) rotate(180deg); } }
 @keyframes spia { 0%, 100% { fill-opacity: 0; } 20%, 40% { fill-opacity: .9; } 30% { fill-opacity: .35; } }
-@keyframes gancio { 0% { transform: rotate(0); } 30% { transform: rotate(16deg); } 60% { transform: rotate(-10deg); } 82% { transform: rotate(4deg); } 100% { transform: rotate(0); } }
 .anima .ico-gommista .gira { animation: gira 1.1s var(--ease); }
 .anima .ico-meccanica .chiave { animation: chiave .9s var(--ease); }
 .anima .ico-elettrauto .fulmine { animation: fulmine .8s linear; }
 .anima .ico-carrozzeria .scintilla { animation: scintilla .9s var(--ease); }
 .anima .ico-diagnosi .spia { animation: spia 1.2s ease-in-out; }
-.anima .ico-soccorso .gancio { animation: gancio 1.1s ease-in-out; }
 @media (hover: hover) {
   .servizio:hover .ico-gommista .gira, .sezione-servizio:hover .ico-gommista .gira { animation: gira 1.1s var(--ease); }
   .servizio:hover .ico-meccanica .chiave, .sezione-servizio:hover .ico-meccanica .chiave { animation: chiave .9s var(--ease); }
   .servizio:hover .ico-elettrauto .fulmine, .sezione-servizio:hover .ico-elettrauto .fulmine { animation: fulmine .8s linear; }
   .servizio:hover .ico-carrozzeria .scintilla, .sezione-servizio:hover .ico-carrozzeria .scintilla { animation: scintilla .9s var(--ease); }
   .servizio:hover .ico-diagnosi .spia, .sezione-servizio:hover .ico-diagnosi .spia { animation: spia 1.2s ease-in-out; }
-  .servizio:hover .ico-soccorso .gancio, .sezione-servizio:hover .ico-soccorso .gancio { animation: gancio 1.1s ease-in-out; }
 }
 
 /* ---------- bottoni e link ---------- */
