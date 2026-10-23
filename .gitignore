@@ -4,3 +4,8 @@ __pycache__/
 .env*
 .playwright-cli/
 tmp/
+.playwright-mcp/
+# originali delle foto: pesanti e con i dati GPS; nel sito vanno solo le versioni preparate da sorgente/foto.py
+materiali/foto/*
+!materiali/foto/LEGGIMI.md
+materiali/*.pdf

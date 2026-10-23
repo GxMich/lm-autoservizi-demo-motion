@@ -5,22 +5,13 @@ Stili e script: sorgente/nuovo.css e sorgente/nuovo.js."""
 import hashlib, json, math, os, sys
 from html import escape
 from richiesta import sezione_richiesta, risorse_richiesta, opzioni_problema
+from contenuti import DOMINIO, TEL, TEL_TXT, WA, EMAIL, PEC, MAPS, SEDE_LEGALE, GEAR, GEAR_PIENO, RECENSIONI, DETT, FAQ_R, ATT
 
 QUI = os.path.dirname(os.path.abspath(__file__))
 RADICE = os.path.dirname(QUI)
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(RADICE, "docs")
 A = ""
 DEMO = os.environ.get("LM_PRODUZIONE") != "1"
-DOMINIO = "https://www.lmautoservizi.it"
-TEL, TEL_TXT = "+393426436085", "342 643 6085"
-WA = "https://wa.me/393426436085?text=Ciao%20Luca%2C%20vorrei%20informazioni."
-EMAIL = "lucamiglietta4@gmail.com"
-PEC = "lucamiglie@pec.it"
-MAPS = "https://maps.app.goo.gl/MKwoz3CKAvCdeNwj8"
-# Il biglietto conferma questo indirizzo come sede legale, non come officina.
-SEDE_LEGALE = "Via Ticineto 15, 15040 Frassineto Po (AL)"
-GEAR = open(os.path.join(QUI, "ingranaggio.txt"), encoding="utf-8").read().strip()
-GEAR_PIENO = f"{GEAR} M197 0A197 197 0 1 0 -197 0A197 197 0 1 0 197 0Z"
 ASSET_V = hashlib.sha256(b"".join(open(os.path.join(QUI, f), "rb").read() for f in ("nuovo.css", "nuovo.js"))).hexdigest()[:10]
 
 NAV = [("officina.html", "Officina"), ("ritiro-consegna.html", "Ritiro e consegna"), ("gomme-ricambi.html", "Gomme e ricambi"),
@@ -301,10 +292,7 @@ servizi_li = "".join(f'''<li class="servizio" id="srv-{i}" data-servizio="{i}"><
   <button class="link-btn" type="button" data-apri="ritiro">Chiedi un preventivo</button></li>''' for i, t, d, tg in SERVIZI)
 indice_li = "".join(f'<li><button type="button" data-vai="{i}" aria-label="{t}"></button></li>' for i, t, _, _ in SERVIZI)
 
-RECENSIONI = [("Un servizio inimitabile! Ritira la tua auto direttamente da casa tua e te la riporta riparata e sanificata. Stupendo!", "Marco"),
-              ("Dovevo fare un cambio gomme e mi sono affidata a LM Autoservizi. Luca è molto gentile e ha fatto un buon lavoro, senza che io gli portassi l'auto.", "Alessia"),
-              ("Adoro il suo modo di lavorare, sempre impeccabile, grazie!", "Giacomo")]
-rec = "".join(f'<figure class="voce"><span class="virgolette" aria-hidden="true">“</span><blockquote><p>{t}</p></blockquote><figcaption>{n}</figcaption></figure>' for t, n in RECENSIONI)
+rec ="".join(f'<figure class="voce"><span class="virgolette" aria-hidden="true">“</span><blockquote><p>{t}</p></blockquote><figcaption>{n}</figcaption></figure>' for t, n in RECENSIONI)
 
 SERVIZI_HOME = [
     ("meccanica", "Meccanica", "Tagliandi, freni e manutenzione multimarca. Concordiamo il preventivo prima di iniziare.", "officina.html#manutenzione", "Tagliando e manutenzione"),
@@ -477,25 +465,7 @@ home = home.replace("{MISURA}", misura_modulo("hg"))
 scrivi("index.html", home)
 
 # ================================================================== OFFICINA
-DETT = [
-    ("manutenzione", "Tagliando e manutenzione", "Manutenzione ordinaria e straordinaria su auto di tutte le marche. Ti dico cosa serve e quanto costa prima di iniziare.",
-     ["Assistenza e manutenzione programmata", "Riparazioni meccaniche, anche sul ponte", "Preventivo gratuito dopo la diagnosi"]),
-    ("diagnosi", "Diagnosi centraline", "Una spia accesa sul cruscotto si legge subito, prima di decidere cosa fare. Software aggiornato ogni giorno.",
-     ["Lettura degli errori e delle spie", "Programmazione delle centraline", "Diagnosi in officina o, nei casi semplici, da te"]),
-    ("elettrauto", "Elettrauto", "Diagnosi e riparazione di ogni genere di difetto elettrico.",
-     ["Problemi di avviamento e di ricarica", "Impianto luci, accessori e cablaggi", "Preventivo prima di iniziare"]),
-    ("clima", "Climatizzatore", "Controllo e ricarica dell'impianto di climatizzazione. Ho la formazione per il recupero dei gas fluorurati nei veicoli.",
-     ["Controllo dell'impianto", "Ricarica del gas", "Formazione sul recupero dei gas fluorurati (Reg. CE 307/2008)"]),
-    ("gomme", "Gomme", "Il cambio dei pneumatici sul cerchio si fa in officina. Le forature e il cambio delle ruote già montate le faccio anche da te.",
-     ["Sostituzione pneumatici, equilibratura, convergenza e campanatura", "Riparazione delle forature", "Cambio stagionale delle ruote montate"]),
-    ("carrozzeria", "Carrozzeria", "Lavori di carrozzeria, verniciatura, saldatura e sistemazioni varie. Chiedi un preventivo gratuito e confronta i prezzi.",
-     ["Carrozzeria e sistemazioni varie", "Verniciatura", "Saldatura"]),
-    ("revisione", "Pre-revisione", "Non farti trovare impreparato: ti controllo l'auto gratis prima della revisione periodica e ti prenoto la revisione.",
-     ["Controllo generale gratuito", "Prenotazione della revisione", "Sono abilitato come responsabile tecnico delle revisioni"]),
-    ("aziende", "Consulenza alle imprese", "Consulenza per le imprese che operano nel settore automobilistico. Ne parliamo e capiamo insieme di cosa hai bisogno.",
-     ["Un tecnico con esperienza decennale multimarca", "Un confronto su misura per la tua attività"]),
-]
-indice = "".join(f'<li><a href="#{a}">{t}</a></li>' for a, t, _, _ in DETT)
+indice ="".join(f'<li><a href="#{a}">{t}</a></li>' for a, t, _, _ in DETT)
 sezioni = "".join(f'''<article class="dettaglio" id="{a}" data-rivela><h2>{t}</h2><p>{d}</p><ul class="spunte">{"".join(f"<li>{I['check']}{p}</li>" for p in pt)}</ul>
   <p><a class="link" href="contatti.html#scrivimi">Chiedi un preventivo</a></p></article>''' for a, t, d, pt in DETT)
 scrivi("officina.html", head("officina.html", "Cosa si fa in officina a Frassineto Po | L.M. Autoservizi",
@@ -507,11 +477,6 @@ scrivi("officina.html", head("officina.html", "Cosa si fa in officina a Frassine
 </div></section>''' + finale() + footer())
 
 # ================================================================== RITIRO E CONSEGNA
-FAQ_R = [("Quanto costa il ritiro?", "Dimmi dove si trova l'auto: ti dico subito se e quanto costa, prima di muovermi."),
-         ("Fino a dove arrivi?", "Ritiro e riconsegno a Casale Monferrato e nei paesi vicini. Chiama per sapere se passo anche da te."),
-         ("Quanto costa la vettura di cortesia?", "Niente: è sempre gratuita. Te la lascio con il pieno, pulita e igienizzata, per tutto il tempo che serve."),
-         ("E se la riparazione richiede più giorni?", "La vettura di cortesia resta con te per tutto il tempo della riparazione. Ti aggiorno io sull'avanzamento."),
-         ("Come pago?", "In contanti, con carta o con bancomat, alla riconsegna.")]
 faq_html = "".join(f'<details><summary>{q}</summary><p>{r}</p></details>' for q, r in FAQ_R)
 faq_schema = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": r}} for q, r in FAQ_R]}
 scrivi("ritiro-consegna.html", head("ritiro-consegna.html", "Ritiro e consegna dell'auto con vettura di cortesia | L.M. Autoservizi",
@@ -570,14 +535,6 @@ scrivi("officina-mobile.html", head("officina-mobile.html", "Officina mobile a d
 </div></section>''' + footer())
 
 # ================================================================== CHI SONO
-ATT = [("qualifica-professionale", "Operatore di riparazioni elettromeccaniche per l'autoveicolo", "Qualifica professionale, 400 ore, 2010"),
-       ("responsabile-revisioni", "Responsabile tecnico delle revisioni periodiche", "Attestato di competenza abilitante"),
-       ("gas-fluorurati", "Recupero gas fluorurati nei veicoli", "Climatizzatori auto, Reg. CE 307/2008, 2012"),
-       ("diploma", "Diploma di liceo scientifico tecnologico", "IIS A. Sobrero, Casale Monferrato, 2009"),
-       ("sicurezza-generale", "Sicurezza sul lavoro: formazione generale e specifica", "D.Lgs. 81/2008, 8 ore"),
-       ("sicurezza-specifica", "Sicurezza sul lavoro: formazione specifica", "D.Lgs. 81/2008, 4 ore"),
-       ("inglese", "Lingua inglese, livello 2", "Attestato di frequenza e profitto, 2011"),
-       ("gran-turismo", "Guida di vetture gran turismo", "Puresport")]
 att_html = "".join(f'''<li><button type="button" data-lightbox="{A}assets/img/attestati/{f}.webp" data-titolo="{t}"><img src="{A}assets/img/attestati/{f}-thumb.webp" alt="" loading="lazy" width="340" height="480"><span>{t}<small>{s}</small></span></button></li>''' for f, t, s in ATT)
 scrivi("chi-sono.html", head("chi-sono.html", "Chi sono: Luca Miglietta, meccanico a Frassineto Po | L.M. Autoservizi",
       "Luca Miglietta, titolare di L.M. Autoservizi: qualifica in riparazioni elettromeccaniche, abilitazione a responsabile tecnico delle revisioni ed esperienza decennale multimarca.", [SCHEMA]) + header("chi-sono.html")
