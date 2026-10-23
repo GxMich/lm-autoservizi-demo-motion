@@ -379,16 +379,19 @@
     lenis.on("scroll", function (l) { ScrollTrigger.update(); suScroll(l.scroll); });
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
+    // La sezione dei servizi ha già lo spazio per la testata: si allinea in cima allo schermo, così si vede tutta.
+    // La destinazione si calcola sulla posizione reale della pagina, anche se lo scorrimento è appena cambiato.
+    var destinazione = function (el) { return el.getBoundingClientRect().top + window.scrollY + (el.classList.contains("servizi") ? 0 : -88); };
     $$('a[href^="#"]').forEach(function (a) {
       a.addEventListener("click", function (e) {
-        var id = a.getAttribute("href");
-        if (id.length < 2 || !$(id)) return;
+        var id = a.getAttribute("href"), meta = id.length > 1 && $(id);
+        if (!meta) return;
         e.preventDefault();
-        lenis.scrollTo(id, { offset: -88, duration: 1.2 });
+        lenis.scrollTo(destinazione(meta), { duration: 1.2 });
         history.replaceState(null, "", id);
       });
     });
-    if (location.hash && $(location.hash)) setTimeout(function () { lenis.scrollTo(location.hash, { offset: -88, immediate: true }); }, 60);
+    if (location.hash && $(location.hash)) setTimeout(function () { lenis.scrollTo(destinazione($(location.hash)), { immediate: true }); }, 60);
   }
 
   var mm = gsap.matchMedia();

@@ -195,6 +195,7 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
 .servizi { position: relative; padding-block: clamp(80px, 11vw, 150px); background: var(--asfalto); border-radius: 32px 32px 0 0; }
 .servizi-testa { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 52px); }
 .servizi-testa h2 { font-size: clamp(2.6rem, 6.4vw, 5.6rem); }
+.servizi-testa-lato { display: grid; justify-items: start; gap: 4px; }
 .servizi-testa .lead { margin: 0; max-width: 38ch; }
 .servizi-griglia { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .servizio { --x: 50%; --y: 40%; position: relative; isolation: isolate; overflow: hidden; width: 100%; height: 100%; aspect-ratio: 4 / 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 22px 18px; text-align: center; background: var(--asfalto-2); color: var(--testo); border: 1.5px solid var(--linea); border-radius: 24px; font: inherit; cursor: pointer; transition: border-color .4s var(--ease), background-color .4s var(--ease), color .4s var(--ease), transform .2s var(--ease); }
@@ -227,7 +228,17 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
 .servizio--largo .servizio-testo { display: grid; gap: 2px; }
 .servizio--largo .servizio-nome { font-size: clamp(1.1rem, 1.6vw, 1.35rem); }
 .servizio--largo .servizio-desc { max-width: none; }
-.servizi-altro { margin: 26px 0 0; }
+/* Sugli schermi abbastanza alti la sezione sta tutta in una schermata: si sceglie senza scorrere.
+   Il margine in alto lascia posto alla testata, le righe della griglia si dividono lo spazio che resta. */
+@media (min-height: 560px) {
+  .servizi { display: flex; flex-direction: column; height: min(100svh, 1000px); padding-block: calc(var(--testata) + 20px) 28px; scroll-margin-top: calc(-1 * (var(--testata) + 16px)); }
+  .servizi > .wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .servizi-testa { margin-bottom: clamp(14px, 2.6svh, 28px); }
+  .servizi-testa h2 { font-size: clamp(2rem, 4.2vw, 4rem); }
+  .servizi .servizi-griglia { flex: 1; min-height: 0; grid-template-rows: repeat(2, minmax(0, 1fr)) auto; }
+  .servizi .servizio:not(.servizio--largo) { aspect-ratio: auto; }
+  .servizi .servizio-ico .ico { width: clamp(44px, 8svh, 84px); height: clamp(44px, 8svh, 84px); }
+}
 
 /* ---------- Luca (home) ---------- */
 .luca { padding-block: clamp(80px, 11vw, 150px); }
@@ -544,6 +555,7 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
   .eroe-info { justify-items: start; text-align: left; }
   .servizi-griglia { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .servizio:not(.servizio--largo) { aspect-ratio: 1; }
+  .servizi .servizi-griglia { grid-template-rows: repeat(3, minmax(0, 1fr)) auto; }
   .luca-griglia, .ritiro-griglia, .ritiro-dettagli, .mobile-griglia, .gomme-griglia, .chi-griglia, .contatti-griglia, .contatti-home-griglia { grid-template-columns: 1fr; }
   .luca-foto, .chi-foto { aspect-ratio: 4 / 3; position: static; }
   .luca-foto img, .chi-foto img { object-position: 50% 30%; }
@@ -564,6 +576,9 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
   .eroe-chiama { display: none; }
   .servizi { border-radius: 24px 24px 0 0; }
   .servizi-griglia { gap: 10px; }
+  .servizi-testa { margin-bottom: 12px; }
+  .servizi-testa h2 { font-size: 2rem; }
+  .servizi-testa-lato { display: none; }
   .servizio { gap: 10px; padding: 14px 10px; border-radius: 20px; }
   .servizio-ico .ico { width: 58px; height: 58px; }
   .servizio-nome { font-size: 1.08rem; }
@@ -599,4 +614,18 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
   .mezzi span { min-height: 96px; gap: 6px; padding: 12px 4px 10px; border-radius: 16px; }
   .mezzi b { font-size: .92rem; }
   .veicolo { width: 70px; height: 39px; }
+}
+
+/* ---------- servizi in una schermata sul telefono: sotto resta libero lo spazio della barra rapida ---------- */
+@media (max-width: 599px) and (min-height: 560px) {
+  .servizi { padding-block: calc(var(--testata) + 12px) calc(84px + env(safe-area-inset-bottom)); }
+  .servizi .servizio { padding: 12px 8px; gap: 8px; }
+  .servizi .servizio--largo { padding: 12px 16px; }
+}
+@media (max-width: 599px) and (min-height: 560px) and (max-height: 720px) {
+  .servizi .servizio-ico .ico { width: clamp(36px, 6.5svh, 52px); height: clamp(36px, 6.5svh, 52px); }
+  .servizi .servizio { padding: 8px 6px; gap: 6px; }
+  .servizi .servizio-nome { font-size: .98rem; }
+  .servizi .servizio--largo .servizio-desc { display: none; }
+  .servizi .servizio--largo .servizio-ico .ico { width: 32px; height: 32px; }
 }

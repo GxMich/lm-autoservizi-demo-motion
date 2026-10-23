@@ -542,10 +542,12 @@ def pagina_home():
   <div class="wrap">
     <div class="servizi-testa">
       <h2 id="servizi-t">{t("Cosa ti serve?", "What do you need?")}</h2>
-      <p class="lead">{t("Tocca il servizio, scegli il mezzo e scrivimi due righe. Ti rispondo io, di persona.", "Tap the service, choose your vehicle and send me a couple of lines. I'll answer personally.")}</p>
+      <div class="servizi-testa-lato">
+        <p class="lead">{t("Tocca il servizio, scegli il mezzo e scrivimi due righe. Ti rispondo io, di persona.", "Tap the service, choose your vehicle and send me a couple of lines. I'll answer personally.")}</p>
+        <a class="link" href="officina.html">{t("Tutti i servizi nel dettaglio", "All services in detail")} {I["freccia"]}</a>
+      </div>
     </div>
     {griglia_servizi()}
-    <p class="servizi-altro"><a class="link" href="officina.html">{t("Tutti i servizi nel dettaglio", "All services in detail")} {I["freccia"]}</a></p>
   </div>
 </section>
 
