@@ -83,6 +83,7 @@ ICONE = {
     "elettrauto": svg('<rect x="2.5" y="7" width="19" height="13" rx="2.2"/><path d="M6.5 7V4.8h3V7M14.5 7V4.8h3V7M5.6 10.6h2.6M15.8 10.6h2.6M17.1 9.3v2.6"/>'
                       '<path class="pieno fulmine" d="M12.9 9.4 9.6 14.2h2.6l-.9 4.4 3.3-5h-2.6z"/>', "ico-elettrauto"),
     "gommista": svg(_gomma, "ico-gommista"),
+    "ricambi": svg('<path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z"/><path d="M4.5 7.8 12 12l7.5-4.2M12 12v8.5"/><path class="pieno" d="M10 8h4v4h-4z"/>', "ico-ricambi"),
     "carrozzeria": svg('<path d="M2.6 19.4v-2.6c0-.8.5-1.5 1.3-1.8l2.2-.8 2.6-3.3c.4-.5 1-.8 1.6-.8h4.3c.6 0 1.2.3 1.6.7l3 3.3 1.8.4c.9.2 1.5 1 1.5 1.9v3"/>'
                        '<path d="M2.6 19.4h1.7M9.1 19.4h5.6M19.6 19.4h2.9M7 14.3h11.8M12.4 10.9v3.4"/><circle cx="6.7" cy="19.6" r="2.3"/><circle cx="17.2" cy="19.6" r="2.3"/>'
                        '<path class="pieno scintilla" d="M19.5 1.6l.75 1.85 1.85.75-1.85.75-.75 1.85-.75-1.85-1.85-.75 1.85-.75z"/>', "ico-carrozzeria"),
@@ -145,10 +146,7 @@ MEZZI = [("auto", ("Auto", "Car"), ("Auto", "Car"),
           ("Marca e modello aiutano, per esempio Fiat Ducato 2017.", "Make and model help, for example Fiat Ducato 2017.")),
          ("camper", ("Camper", "Motorhome"), ("Camper", "Motorhome"),
           ("Marca e modello aiutano, per esempio mansardato su Ducato, 2016.", "Make and model help, for example a Ducato-based motorhome, 2016.")),
-         ("ciclomotore", ("Ciclomotore", "Moped"), ("Ciclomotore", "Moped"),
-          ("Marca e modello aiutano, per esempio Piaggio Liberty 50.", "Make and model help, for example Piaggio Liberty 50.")),
-         ("altro", ("Altro", "Other"), ("Altro mezzo", "Other vehicle"),
-          ("Scrivimi che mezzo è, con marca e modello.", "Tell me what vehicle it is, with make and model."))]
+         ]
 
 
 def veicolo(chi):
@@ -173,9 +171,12 @@ SERVIZI = [
     ("diagnosi", ("Diagnosi e pre-revisione", "Diagnostics & pre-inspection"),
      ("Spie accese, centraline, controllo gratuito prima della revisione", "Warning lights, ECUs, free check before the roadworthiness test"),
      ("Es. spia del motore accesa, revisione in scadenza a marzo.", "E.g. engine warning light on, inspection due in March."), ""),
-    ("soccorso", ("Soccorso", "Roadside help"),
-     ("Rimasto fermo? Dimmi dove sei: arrivo con l'officina mobile", "Broken down? Tell me where you are: I come with the mobile workshop"),
-     ("Dove ti trovi e cosa è successo. Se sei in un punto pericoloso, chiamami.", "Where you are and what happened. If you're in a dangerous spot, call me."), "urgente"),
+    ("soccorso", ("Assistenza a domicilio", "At-home assistance"),
+     ("Interventi possibili direttamente a casa tua", "Repairs that can be carried out at your home"),
+     ("Dimmi dove si trova il mezzo e di che intervento hai bisogno.", "Tell me where the vehicle is and what kind of help you need."), ""),
+    ("ricambi", ("Vendita ricambi e gomme", "Parts and tyres for sale"),
+     ("Ricambi e pneumatici: chiedimi disponibilità e prezzo", "Spare parts and tyres: ask me about availability and price"),
+     ("Scrivimi marca, modello e anno del mezzo; per le gomme, anche la misura.", "Send me the make, model and year; for tyres, include the size."), "vendita"),
 ]
 # Richieste che non sono caselle: (nome, suggerimento, opzioni, titolo della tendina)
 EXTRA = {
@@ -200,6 +201,8 @@ def dati_servizio(nome, nota, opzioni="", titolo=None):
         a += " data-urgente"
     if "senza-mezzo" in opzioni:
         a += " data-senza-mezzo"
+    if "vendita" in opzioni:
+        a += " data-vendita"
     return a
 
 
@@ -383,6 +386,23 @@ def scheda():
         <legend>{t("Che mezzo è?", "What vehicle is it?")}</legend>
         <div>{"".join(scelte)}</div>
       </fieldset>
+      <div class="scheda-vendita" data-vendita-campi hidden>
+        <div class="campo"><label for="scheda-tipo">{t("Cosa cerchi?", "What are you looking for?")}</label><select id="scheda-tipo" name="tipo"><option value="gomme">{t("Gomme", "Tyres")}</option><option value="ricambi">{t("Ricambi", "Parts")}</option></select></div>
+        <div data-pannello-vendita="gomme">
+          <fieldset class="campo misura-scheda"><legend>{t("Misura della gomma", "Tyre size")}</legend><div class="misura">
+            <label><span class="sr">{t("Larghezza", "Width")}</span><input name="larghezza" inputmode="numeric" maxlength="3" placeholder="205" autocomplete="off"></label><i aria-hidden="true">/</i>
+            <label><span class="sr">{t("Spalla", "Profile")}</span><input name="spalla" inputmode="numeric" maxlength="2" placeholder="55" autocomplete="off"></label><i aria-hidden="true">R</i>
+            <label><span class="sr">{t("Cerchio in pollici", "Rim size in inches")}</span><input name="cerchio" inputmode="numeric" maxlength="2" placeholder="16" autocomplete="off"></label>
+          </div><p class="errore" data-errore-misura aria-live="polite"></p></fieldset>
+          <div class="campo"><label for="scheda-stagione">{t("Che gomme cerchi", "Which tyres")}</label><select id="scheda-stagione" name="stagione"><option>{t("Estive", "Summer")}</option><option>{t("Invernali", "Winter")}</option><option>{t("Quattro stagioni", "All-season")}</option><option>{t("Non lo so, consigliami tu", "Not sure, please advise")}</option></select></div>
+          <div class="campo"><label for="scheda-targa-gomme">{t("Targa", "Number plate")} <span>({t("facoltativa", "optional")})</span></label><input id="scheda-targa-gomme" name="targa-gomme" maxlength="8" placeholder="AB123CD" autocomplete="off" autocapitalize="characters"></div>
+        </div>
+        <div data-pannello-vendita="ricambi" hidden>
+          <div class="campo"><label for="scheda-targa-ricambi">{t("Targa", "Number plate")} <span>({t("facoltativa", "optional")})</span></label><input id="scheda-targa-ricambi" name="targa-ricambi" maxlength="8" placeholder="AB123CD" autocomplete="off" autocapitalize="characters"></div>
+          <div class="campo"><label for="scheda-pezzo">{t("Che pezzo ti serve", "Which part do you need")}</label><input id="scheda-pezzo" name="pezzo" placeholder="{t("Es. pastiglie dei freni anteriori", "E.g. front brake pads")}"><p class="errore" data-errore-pezzo aria-live="polite"></p></div>
+          <div class="campo"><label for="scheda-mezzo-ricambi">{t("Mezzo", "Vehicle")} <span>({t("facoltativo", "optional")})</span></label><input id="scheda-mezzo-ricambi" name="mezzo-ricambi" placeholder="{t("Es.", "E.g.")} Fiat Panda 2015"></div>
+        </div>
+      </div>
       <div class="campo">
         <label for="scheda-note">{t("Scrivimi due righe", "Write me a couple of lines")} <span>({t("facoltativo", "optional")})</span></label>
         <textarea id="scheda-note" name="note" rows="3" maxlength="600" aria-describedby="scheda-aiuto"></textarea>
@@ -468,9 +488,9 @@ def casella(s, con_foto=True):
 
 def griglia_servizi(con_foto=True):
     nome, nota, opzioni, titolo = EXTRA["altro"]
-    altro = f'''<li class="servizi-largo"><button type="button" class="servizio servizio--largo" {dati_servizio(nome, nota, opzioni, titolo)}>
+    altro = f'''<li><button type="button" class="servizio" {dati_servizio(nome, nota, opzioni, titolo)}>
   <span class="servizio-ico" aria-hidden="true">{ICONE["altro"]}</span>
-  <span class="servizio-testo"><span class="servizio-nome">{t("Non so cos'ha", "Not sure what's wrong")}</span><span class="servizio-desc">{t("Descrivimi il problema e lo capiamo insieme", "Describe the problem and we'll work it out together")}</span></span>
+  <span class="servizio-nome">{t("Non so cos'ha", "Not sure what's wrong")}</span><span class="servizio-desc">{t("Descrivimi il problema e lo capiamo insieme", "Describe the problem and we'll work it out together")}</span>
 </button></li>'''
     return f'<ul class="servizi-griglia">{"".join(casella(s, con_foto) for s in SERVIZI)}{altro}</ul>'
 
@@ -640,11 +660,16 @@ def pagina_servizi():
           ("Programmazione delle centraline, con software aggiornato ogni giorno", "ECU programming, with software updated daily"),
           ("Controllo gratuito prima della revisione e prenotazione", "Free check before the test, and booking"),
           ("Abilitato come responsabile tecnico delle revisioni", "Qualified technical manager for vehicle inspections")], ""),
-        ("soccorso", ("Se sei rimasto fermo, dimmi dove sei. Quando si può intervengo sul posto con l'officina mobile; se serve il ponte, ritiro il mezzo e ti lascio una vettura di cortesia.",
-                      "If you've broken down, tell me where you are. When possible I fix it on the spot with the mobile workshop; if it needs the lift, I collect the vehicle and leave you a courtesy car."),
+        ("soccorso", ("In base al lavoro, posso intervenire direttamente a casa tua con l’officina mobile.",
+                      "Depending on the job, I can come to your home with the mobile workshop."),
          [("Riparazione delle forature", "Puncture repair"), ("Cambio delle ruote già montate", "Changing wheels already mounted"),
           ("Diagnosi e lettura delle spie", "Diagnostics and warning lights"), ("Avviamento e problemi elettrici, nei casi semplici", "Starting and electrical problems, in simple cases")],
-         f'<a class="link" href="officina-mobile.html">{t("L’officina mobile", "The mobile workshop")} {I["freccia"]}</a>'),
+         f'<a class="link" href="officina-mobile.html">{t("Scopri l’officina mobile", "Discover the mobile workshop")} {I["freccia"]}</a>'),
+        ("ricambi", ("Chiedimi disponibilità e prezzo per ricambi e pneumatici.",
+                      "Ask me about availability and prices for spare parts and tyres."),
+         [("Vendita di ricambi", "Spare parts for sale"), ("Vendita di pneumatici", "Tyres for sale"),
+          ("Preventivo in base a marca, modello e anno", "Quote based on make, model and year")],
+         f'<a class="link" href="gomme-ricambi.html">{t("Gomme e ricambi", "Tyres and parts")} {I["freccia"]}</a>'),
     ]
     nomi = {s[0]: s[1] for s in SERVIZI}
     indice = "".join(f'<li><a href="#{chi}">{ICONE[chi]}<span>{tt(nomi[chi])}</span></a></li>' for chi, _, _, _ in sezioni_dati)
@@ -670,8 +695,8 @@ def pagina_servizi():
       </div>
     </article>'''
     scrivi("officina.html", head("officina.html", t("Servizi: meccanica, elettrauto, gomme | L.M. Autoservizi", "Services: mechanics, auto electrics, tyres | L.M. Autoservizi"),
-           t("Meccanica, elettrauto e clima, gommista, carrozzeria, diagnosi e pre-revisione, soccorso con l'officina mobile e consulenza alle imprese, a Frassineto Po.",
-             "Mechanics, auto electrics and A/C, tyres, bodywork, diagnostics and pre-inspection, roadside help with the mobile workshop and business consulting in Frassineto Po."),
+           t("Meccanica, elettrauto e clima, gommista, carrozzeria, diagnosi e pre-revisione, assistenza a domicilio, vendita di ricambi e gomme e consulenza alle imprese, a Frassineto Po.",
+             "Mechanics, auto electrics and A/C, tyres, bodywork, diagnostics and pre-inspection, at-home assistance, parts and tyre sales, and business consulting in Frassineto Po."),
            [azienda(), briciole("officina.html", t("Servizi", "Services"))]) + testata("officina.html")
            + intro(t("Servizi", "Services"), t("Tutto quello che serve al tuo mezzo, su veicoli di tutte le marche. Il preventivo è gratuito e arriva prima di iniziare.",
                                                "Everything your vehicle needs, on all makes. The quote is free and comes before any work starts.")) + f'''
@@ -734,7 +759,7 @@ def pagina_ritiro():
 
 # ================================================================== OFFICINA MOBILE
 def pagina_mobile():
-    scrivi("officina-mobile.html", head("officina-mobile.html", t("Officina mobile e soccorso | L.M. Autoservizi", "Mobile workshop and roadside help | L.M. Autoservizi"),
+    scrivi("officina-mobile.html", head("officina-mobile.html", t("Officina mobile a domicilio | L.M. Autoservizi", "Mobile workshop at your home | L.M. Autoservizi"),
            t("Forature, cambio delle ruote montate, diagnosi e avviamento direttamente dove si trova il mezzo, a Casale Monferrato e nei paesi vicini.",
              "Punctures, changing mounted wheels, diagnostics and starting problems fixed where your vehicle is, in Casale Monferrato and nearby villages."),
            [azienda(), briciole("officina-mobile.html", t("Officina mobile", "Mobile workshop"))], immagine="officina-mobile") + testata("officina-mobile.html")
@@ -754,7 +779,7 @@ def pagina_mobile():
       <h2>{t("E quando serve l'officina", "When the workshop is needed")}</h2>
       <p>{t("Se il lavoro richiede il ponte o tempi lunghi, ritiro il mezzo e ti lascio una vettura di cortesia gratuita. Il preventivo è sempre gratuito e arriva prima di iniziare.",
               "If the job needs the lift or more time, I collect the vehicle and leave you a free courtesy car. The quote is always free and comes before any work starts.")}</p>
-      <div class="azioni">{apri_servizio("soccorso", t("Sono fermo: scrivi a Luca", "I've broken down: message Luca"))}<a class="btn btn--vuoto" href="tel:{TEL}">{I["tel"]}{t("Chiama", "Call")} {tel_txt()}</a></div>
+      <div class="azioni">{apri_servizio("soccorso", t("Chiedi assistenza a domicilio", "Request at-home assistance"))}<a class="btn btn--vuoto" href="tel:{TEL}">{I["tel"]}{t("Chiama", "Call")} {tel_txt()}</a></div>
       <p class="piccolo">{t("Lavoro a Casale Monferrato e nei paesi vicini. Chiama per sapere se arrivo anche da te.", "I work in Casale Monferrato and nearby villages. Call to check whether I can reach you.")}</p>
     </div>
   </div>

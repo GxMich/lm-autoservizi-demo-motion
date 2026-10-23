@@ -161,22 +161,36 @@
 
   /* ---------- tendina "scrivi a Luca" ---------- */
   if (scheda) {
-    var form = $("form", scheda), titolo = $("#scheda-t", scheda), mezzi = $("[data-mezzi]", scheda);
+    var form = $("form", scheda), titolo = $("#scheda-t", scheda), mezzi = $("[data-mezzi]", scheda), venditaCampi = $("[data-vendita-campi]", scheda), tipoVendita = $("[name='tipo']", scheda);
     var note = form.elements.note, aiuto = $("[data-aiuto]", scheda), esito = $("[data-esito]", scheda);
     var testoEsito = esito.textContent;
-    var servizio = "", servizioIt = "", nota = "", senzaMezzo = false, origine = null, chiudendo = false;
+    var servizio = "", servizioIt = "", nota = "", senzaMezzo = false, vendita = false, origine = null, chiudendo = false;
 
     var mezzoScelto = function () { return $("input[name='mezzo']:checked", scheda); };
     var messaggio = function () {
       var righe = [T.ciao, "", T.servizio + conItaliano(servizio, servizioIt)];
-      if (!senzaMezzo) { var m = mezzoScelto(); righe.push(T.mezzo + conItaliano(m.value, m.getAttribute("data-it"))); }
+      if (vendita) {
+        if (tipoVendita.value === "gomme") {
+          righe.push(T.misura + form.elements.larghezza.value + "/" + form.elements.spalla.value + " R" + form.elements.cerchio.value);
+          righe.push((H.lang === "en" ? "Season: " : "Stagione: ") + form.elements.stagione.value);
+          if (form.elements["targa-gomme"].value.trim()) righe.push((H.lang === "en" ? "Number plate: " : "Targa: ") + form.elements["targa-gomme"].value.trim());
+        } else {
+          if (form.elements["targa-ricambi"].value.trim()) righe.push((H.lang === "en" ? "Number plate: " : "Targa: ") + form.elements["targa-ricambi"].value.trim());
+          righe.push((H.lang === "en" ? "Part: " : "Ricambio: ") + form.elements.pezzo.value.trim());
+          if (form.elements["mezzo-ricambi"].value.trim()) righe.push(T.mezzo + form.elements["mezzo-ricambi"].value.trim());
+        }
+      } else if (!senzaMezzo) { var m = mezzoScelto(); righe.push(T.mezzo + conItaliano(m.value, m.getAttribute("data-it"))); }
       var n = note.value.trim();
       if (n) righe.push("", n);
       return righe.join("\n");
     };
     var aggiorna = function () {
       note.placeholder = nota;
-      aiuto.textContent = senzaMezzo ? "" : mezzoScelto().getAttribute("data-consiglio");
+      aiuto.textContent = (senzaMezzo || vendita) ? "" : mezzoScelto().getAttribute("data-consiglio");
+      if (venditaCampi) {
+        venditaCampi.hidden = !vendita;
+        $$('[data-pannello-vendita]', venditaCampi).forEach(function (p) { p.hidden = p.getAttribute("data-pannello-vendita") !== tipoVendita.value; });
+      }
     };
 
     var apri = function (b) {
@@ -186,8 +200,10 @@
       servizioIt = b.getAttribute("data-servizio-it") || "";
       nota = b.getAttribute("data-nota") || "";
       senzaMezzo = b.hasAttribute("data-senza-mezzo");
+      vendita = b.hasAttribute("data-vendita");
+      if (vendita) tipoVendita.value = "gomme";
       titolo.textContent = b.getAttribute("data-titolo") || servizio;
-      mezzi.hidden = senzaMezzo;
+      mezzi.hidden = senzaMezzo || vendita;
       scheda.classList.toggle("is-urgente", b.hasAttribute("data-urgente"));
       esito.textContent = testoEsito;
       aggiorna();
@@ -238,6 +254,19 @@
     form.addEventListener("change", aggiorna);
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (vendita) {
+        var obbligati = tipoVendita.value === "gomme" ? [form.elements.larghezza, form.elements.spalla, form.elements.cerchio] : [form.elements.pezzo];
+        var invalido = obbligati.find(function (c) { return !c.value.trim() || (c.name !== "pezzo" && !/^\d+$/.test(c.value.trim())); });
+        if (invalido) {
+          invalido.setAttribute("aria-invalid", "true");
+          if (tipoVendita.value === "gomme") $("[data-errore-misura]", scheda).textContent = T.erroreMisura;
+          else $("[data-errore-pezzo]", scheda).textContent = T.errorePezzo;
+          invalido.focus(); return;
+        }
+        obbligati.forEach(function (c) { c.removeAttribute("aria-invalid"); });
+        $("[data-errore-misura]", scheda).textContent = "";
+        $("[data-errore-pezzo]", scheda).textContent = "";
+      }
       var url = wa(messaggio());
       window.open(url, "_blank", "noopener");
       esitoPronto(esito, url);

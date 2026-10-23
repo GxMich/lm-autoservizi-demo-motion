@@ -61,6 +61,7 @@ FOTO_SLOT = {
     "servizio-carrozzeria": ((3, 2), "riconsegna", "", ""),
     "servizio-diagnosi": ((3, 2), "officina", "", ""),
     "servizio-soccorso": ((3, 2), "mobile", "", ""),
+    "servizio-ricambi": ((3, 2), "gomme", "", ""),
 }
 # Dimensioni delle foto stock in docs/assets/img/campione/ (ognuna ha anche la versione -800).
 STOCK = {"eroe": (1600, 2400), "officina": (1600, 1067), "mani": (1600, 2400), "meccanica": (1600, 1067),
