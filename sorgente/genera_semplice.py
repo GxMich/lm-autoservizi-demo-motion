@@ -505,7 +505,8 @@ def scrivi(nome, contenuto):
 
 # ================================================================== HOME
 def pagina_home():
-    riga_a, riga_b = t("Meccanico", "Your trusted"), t("di fiducia", "mechanic")
+    # Il titolo dà per scontato il risultato (il mezzo riparte) e fa sentire lo stato d'animo: niente negazioni.
+    riga_a, riga_b = t("Riparti", "Drive away"), t("sereno", "worry-free")
     caratteri = max(len(riga_a), len(riga_b) + 1)
     recensioni = "".join(f'<figure class="voce"><blockquote lang="it"><p>{testo}</p></blockquote><figcaption>{nome}</figcaption></figure>' for testo, nome in RECENSIONI)
     eroe_stock = foto_info("eroe")[4]
@@ -527,8 +528,8 @@ def pagina_home():
   </div>
   <div class="eroe-basso wrap">
     <div class="eroe-testo">
-      <p>{t("<strong>Sono Luca Miglietta, e l'officina è la mia.</strong> Meccanica, elettrauto, gomme e carrozzeria a Frassineto Po, su tutte le marche. Dalla prima telefonata alla riconsegna parli sempre con me.",
-              "<strong>I'm Luca Miglietta, and this is my workshop.</strong> Mechanics, auto electrics, tyres and bodywork in Frassineto Po, all makes. From the first call to the hand-back, you always deal with me.")}</p>
+      <p>{t("Quando il tuo mezzo ha un problema, vuoi qualcuno che ti ascolti, ti spieghi cosa serve e lo sistemi. <strong>Sono Luca Miglietta</strong>: vedi il preventivo prima di iniziare e dalla prima telefonata alla riconsegna parli sempre con me.",
+              "When your vehicle has a problem, you want someone who listens, explains what's needed and fixes it. <strong>I'm Luca Miglietta</strong>: you see the quote before any work starts, and from the first call to the hand-back you always deal with me.")}</p>
       <div class="azioni">
         <a class="btn btn--arancio" href="#servizi">{t("Cosa ti serve?", "What do you need?")} {I["giu"]}</a>
         <a class="btn btn--vuoto eroe-chiama" href="tel:{TEL}">{I["tel"]}{tel_txt()}</a>

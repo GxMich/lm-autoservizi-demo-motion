@@ -285,6 +285,8 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
 .contatti-home .stato, .contatti-orari .stato { display: flex; margin-bottom: 6px; }
 .numerone { display: inline-block; font-size: clamp(2.3rem, 5.8vw, 5rem); font-weight: 800; letter-spacing: -.035em; line-height: 1; text-decoration: none; margin-bottom: 20px; padding-bottom: 6px; font-variant-numeric: tabular-nums; white-space: nowrap; background: linear-gradient(var(--arancio-vivo), var(--arancio-vivo)) 0 100% / 0 3px no-repeat; transition: background-size .6s var(--ease), color .3s; }
 .numerone:hover { color: var(--evidenza); background-size: 100% 3px; }
+/* in inglese il numero ha il prefisso +39: qualche carattere in più */
+:lang(en) .numerone { font-size: clamp(2rem, 4.6vw, 4.2rem); }
 .contatti-diretti > p { color: var(--testo-2); max-width: 46ch; margin-bottom: 26px; }
 
 /* ---------- pagina servizi ---------- */
@@ -556,7 +558,7 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
   .servizi-griglia { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .servizio:not(.servizio--largo) { aspect-ratio: 1; }
   .servizi .servizi-griglia { grid-template-rows: repeat(3, minmax(0, 1fr)) auto; }
-  .luca-griglia, .ritiro-griglia, .ritiro-dettagli, .mobile-griglia, .gomme-griglia, .chi-griglia, .contatti-griglia, .contatti-home-griglia { grid-template-columns: 1fr; }
+  .luca-griglia, .ritiro-griglia, .ritiro-dettagli, .mobile-griglia, .gomme-griglia, .chi-griglia, .contatti-griglia, .contatti-home-griglia { grid-template-columns: minmax(0, 1fr); }
   .luca-foto, .chi-foto { aspect-ratio: 4 / 3; position: static; }
   .luca-foto img, .chi-foto img { object-position: 50% 30%; }
   .ritiro-foto, .riquadro { position: static; }
@@ -598,6 +600,7 @@ body.menu-aperto .testata { background: var(--notte); border-bottom-color: var(-
   .piede-basso { flex-direction: column; }
   .azioni .btn { flex: 1 1 100%; }
   .numerone { font-size: min(13vw, 3.4rem); }
+  :lang(en) .numerone { font-size: min(10.2vw, 3rem); }
   .foto--fascia { aspect-ratio: 3 / 2; }
   .misura { gap: 6px; }
   .barra { position: fixed; z-index: 40; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(3, 1fr); padding: 6px; border-radius: 18px; background: var(--vetro-barra); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); border: 1px solid var(--linea); box-shadow: 0 16px 40px -12px var(--ombra); transition: transform .45s var(--ease); }
